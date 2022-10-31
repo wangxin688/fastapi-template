@@ -1,0 +1,42 @@
+version: 1
+
+formatters:
+  default:
+    format: "%(asctime)s - %(name)s - %(levelname)s: %(message)s"
+    json:
+      class: app.utils.custom_json_logger.CustomJsonFormatter
+      format: "%(message)s"
+
+handlers:
+  console:
+    class: logging.StreamHandler
+    level: DEBUG
+    formatter: default
+    file:
+      class: logging.handlers.TimedRotatingFileHandler
+      level: DEBUG
+      filename: C:\Users\18246\PycharmProjects\netsight\log\app.log
+      when: W6
+      encoding: utf-8
+      formatter: default
+      backupCount: 2
+      json_file:
+        class: logging.handlers.TimedRotatingFileHandler
+        level: DEBUG
+        filename: C:\Users\18246\PycharmProjects\netsight\log\audit.json
+        when: W6
+        encoding: utf-8
+        formatter: json
+        backupCount: 2
+        loggers:
+          app:
+            handlers: [console, file]
+            level: DEBUG
+            uvicorn:
+              handlers: [console, file]
+              level: DEBUG
+              audit:
+                handlers: [console, json_file]
+                level: DEBUG
+
+disable_existing_loggers: false
