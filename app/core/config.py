@@ -1,7 +1,7 @@
+import multiprocessing
 from functools import lru_cache
 from pathlib import Path
 from typing import Literal
-import multiprocessing
 
 import toml
 from pydantic import (
@@ -59,6 +59,8 @@ class Settings(BaseSettings):
     REDIS_HOST: str
     REDIS_PORT: str
     REDIS_PASSWORD: str
+
+    REDIS_DSN: str
 
     # CELERY
     BROKER_URL: AmqpDsn

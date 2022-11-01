@@ -18,6 +18,9 @@ prometheus-fastapi-instrumentator = "^5.9.1"
 asgi-correlation-id = "^3.2.0"
 loguru = "^0.6.0"
 gunicorn = "^20.1.0"
+sqlalchemy = "^1.4.42"
+orjson = "^3.8.1"
+redis = "^4.3.4"
 
 [tool.poetry.dev-dependencies]
 autoflake = "^1.4"
@@ -31,3 +34,7 @@ build-backend = "poetry.core.masonry.api"
 
 [tool.isort]
 profile = "black"
+
+[[tool.poetry.source]]
+name = "tsinghua"
+url = "https://pypi.tuna.tsinghua.edu.cn/simple/"

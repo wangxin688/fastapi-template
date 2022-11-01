@@ -1,4 +1,3 @@
-import os
 import logging
 import sys
 
@@ -6,9 +5,8 @@ from gunicorn.app.base import BaseApplication
 from gunicorn.glogging import Logger
 from loguru import logger
 
-from app.main import app
 from app.core.config import settings
-
+from app.main import app
 
 LOG_LEVEL = logging.getLevelName(settings.LOG_LEVEL)
 JSON_LOGS = True if settings.JSON_LOGS else False
@@ -29,7 +27,9 @@ class InterceptHandler(logging.Handler):
             frame = frame.f_back
             depth += 1
 
-        logger.opt(depth=depth, exception=record.exc_info).log(level, record.getMessage())
+        logger.opt(depth=depth, exception=record.exc_info).log(
+            level, record.getMessage()
+        )
 
 
 class StubbedGunicornLogger(Logger):
@@ -53,7 +53,8 @@ class StandaloneApplication(BaseApplication):
 
     def load_config(self):
         config = {
-            key: value for key, value in self.options.items()
+            key: value
+            for key, value in self.options.items()
             if key in self.cfg.settings and value is not None
         }
         for key, value in config.items():
@@ -63,7 +64,7 @@ class StandaloneApplication(BaseApplication):
         return self.application
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     intercept_handler = InterceptHandler()
     # logging.basicConfig(handlers=[intercept_handler], level=LOG_LEVEL)
     # logging.root.handlers = [intercept_handler]
@@ -91,7 +92,7 @@ if __name__ == '__main__':
         "accesslog": "-",
         "errorlog": "-",
         "worker_class": "uvicorn.workers.UvicornWorker",
-        "logger_class": StubbedGunicornLogger
+        "logger_class": StubbedGunicornLogger,
     }
 
     StandaloneApplication(app, options).run()

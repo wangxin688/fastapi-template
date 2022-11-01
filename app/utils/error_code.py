@@ -39,9 +39,7 @@ ERR_NUM_0 = ErrCode(0, "success", None)
 ERR_NUM_1 = ErrCode(
     0, "Validation Error, please check requested params or body format", None
 )
-ERR_NUM_500 = ErrCode(
-    500, "Internal Server Error", None
-)
+ERR_NUM_500 = ErrCode(500, "Internal Server Error", None)
 ERR_NUM_4001 = ErrCode(
     4001, "Unauthenticated: Bearer token invalid or not provided", None
 )

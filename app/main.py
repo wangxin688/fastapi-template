@@ -4,6 +4,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from prometheus_fastapi_instrumentator import Instrumentator
 
 from app.core import config
+from app.db.redis_session import RedisClient, init_redis_pool
 from app.register.exception_handler import exception_handlers
 from app.utils.loggers import app_logger as logger
 
@@ -34,6 +35,8 @@ async def start_event():
     )
     app.state.database = await init_db_pool()
     app.state.redis = await init_redis_pool()
+    app.state.r_client = RedisClient(app.state.redis)
+
     logger.info("init app logger success")
 
 
